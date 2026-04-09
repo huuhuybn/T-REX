@@ -20,6 +20,8 @@ highScoreEl.innerText = highScore.toString().padStart(5, '0');
 
 let obstacles = [];
 let clouds = [];
+let mountainFarPos = 0;
+let mountainMidPos = 0;
 let gameSpeed = 6;
 let animationFrameId;
 let spawnTimeoutId;
@@ -140,6 +142,12 @@ function updateGame() {
     const dinoLeft = dDim.l;
     const dinoRight = dDim.l + dDim.w; 
     
+    // Mountain parallax
+    mountainFarPos -= gameSpeed * 0.05;
+    mountainMidPos -= gameSpeed * 0.15;
+    document.getElementById('mountain-far').style.backgroundPositionX = mountainFarPos + 'px';
+    document.getElementById('mountain-mid').style.backgroundPositionX = mountainMidPos + 'px';
+
     // Cloud movements
     for (let i = clouds.length - 1; i >= 0; i--) {
         let c = clouds[i];
