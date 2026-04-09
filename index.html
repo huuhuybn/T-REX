@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon T-Rex Run</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <div class="score-container">
+            <span id="score-label">HI <span id="high-score">00000</span></span>
+            <span id="current-score">00000</span>
+        </div>
+        
+        <div id="game-board">
+            <div id="dino"></div>
+            <div id="ground"></div>
+        </div>
+
+        <div id="start-screen" class="screen active">
+            <h1>NEON RUNNER</h1>
+            <p>Press Space or Tap to Jump</p>
+        </div>
+
+        <div id="game-over-screen" class="screen">
+            <h2>GAME OVER</h2>
+            <p>Score: <span id="final-score">0</span></p>
+            <button id="restart-btn">Try Again</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
