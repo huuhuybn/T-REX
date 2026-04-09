@@ -19,9 +19,11 @@ let highScore = localStorage.getItem('neonRexHighScore') || 0;
 highScoreEl.innerText = highScore.toString().padStart(5, '0');
 
 let obstacles = [];
+let clouds = [];
 let gameSpeed = 6;
 let animationFrameId;
 let spawnTimeoutId;
+let cloudTimeoutId;
 let viewportWidth = window.innerWidth;
 
 // Adjust dino dimensions based on viewport
@@ -96,6 +98,28 @@ function spawnObstacle() {
     spawnTimeoutId = setTimeout(spawnObstacle, randomTime / (gameSpeed / 6)); 
 }
 
+function spawnCloud() {
+    if (isGameOver) return;
+    
+    let sky = document.getElementById('sky');
+    let cloud = document.createElement('div');
+    cloud.classList.add('cloud');
+    let cloudLeft = gameBoard.clientWidth;
+    cloud.style.left = cloudLeft + 'px';
+    cloud.style.top = (Math.random() * 100 + 10) + 'px';
+
+    let scale = Math.random() * 0.8 + 0.4;
+    cloud.style.transform = `scale(${scale})`;
+    
+    sky.appendChild(cloud);
+    
+    let speed = (Math.random() * 0.3 + 0.15) * gameSpeed;
+    clouds.push({ el: cloud, left: cloudLeft, speed: speed });
+
+    let nextTime = Math.random() * 2500 + 1000;
+    cloudTimeoutId = setTimeout(spawnCloud, nextTime / (gameSpeed / 6));
+}
+
 function updateGame() {
     if (isGameOver) return;
 
@@ -115,6 +139,17 @@ function updateGame() {
     const dDim = getDinoDimensions();
     const dinoLeft = dDim.l;
     const dinoRight = dDim.l + dDim.w; 
+    
+    // Cloud movements
+    for (let i = clouds.length - 1; i >= 0; i--) {
+        let c = clouds[i];
+        c.left -= c.speed;
+        c.el.style.left = c.left + 'px';
+        if (c.left < -150) {
+            c.el.remove();
+            clouds.splice(i, 1);
+        }
+    }
     
     for (let i = obstacles.length - 1; i >= 0; i--) {
         let obs = obstacles[i];
@@ -168,13 +203,17 @@ function startGame() {
     
     obstacles.forEach(obs => obs.el.remove());
     obstacles = [];
+    clouds.forEach(c => c.el.remove());
+    clouds = [];
     clearTimeout(spawnTimeoutId);
+    clearTimeout(cloudTimeoutId);
 
     startScreen.classList.remove('active');
     gameOverScreen.classList.remove('active');
 
     // Slight delay before first obstacle
     setTimeout(spawnObstacle, 500);
+    spawnCloud();
     updateGame();
 }
 
@@ -182,6 +221,7 @@ function gameOver() {
     isGameOver = true;
     cancelAnimationFrame(animationFrameId);
     clearTimeout(spawnTimeoutId);
+    clearTimeout(cloudTimeoutId);
     dino.classList.remove('dino-running');
     
     let finalDisplayScore = Math.floor(score / 5);
