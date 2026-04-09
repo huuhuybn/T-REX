@@ -86,10 +86,64 @@ body {
 .cactus {
     position: absolute;
     bottom: 4px; 
-    background-color: #ff0055;
-    box-shadow: 0 0 15px #ff0055, 0 0 30px #ff0055;
-    border-radius: 6px 6px 0 0;
+    background-color: transparent;
     z-index: 4;
+    filter: drop-shadow(0 0 10px #00ff7f) drop-shadow(0 0 20px #00ff7f);
+}
+
+.cactus-trunk {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 100%;
+    background-color: #00ff7f;
+    border-radius: 6px 6px 0 0;
+}
+
+.cactus-arm-left {
+    position: absolute;
+    bottom: 30%;
+    left: -10%;
+    width: 50%;
+    height: 40%;
+    border: 4px solid #00ff7f;
+    border-top: none;
+    border-right: none;
+    border-radius: 0 0 0 8px;
+}
+.cactus-arm-left::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 4px;
+    height: 10px;
+    background: #00ff7f;
+    border-radius: 4px 4px 0 0;
+}
+
+.cactus-arm-right {
+    position: absolute;
+    bottom: 45%;
+    right: -10%;
+    width: 50%;
+    height: 35%;
+    border: 4px solid #00ff7f;
+    border-top: none;
+    border-left: none;
+    border-radius: 0 0 8px 0;
+}
+.cactus-arm-right::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 4px;
+    height: 10px;
+    background: #00ff7f;
+    border-radius: 4px 4px 0 0;
 }
 
 /* Screens */

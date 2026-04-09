@@ -62,15 +62,32 @@ function spawnObstacle() {
     let obstacleLeft = gameBoard.clientWidth; 
     obstacle.style.left = obstacleLeft + 'px';
     
-    let height = Math.random() > 0.5 ? 40 : 55;
-    if (Math.random() > 0.8) height = 30; 
+    let height = Math.random() > 0.5 ? 45 : 60;
+    if (Math.random() > 0.8) height = 35; 
     
     obstacle.style.height = height + 'px';
-    let width = 18;
-    if (Math.random() > 0.7) {
-        width = 32; // double cactus
+    let width = 34;
+    let isDouble = Math.random() > 0.7;
+    if (isDouble) {
+        width = 50; 
     }
     obstacle.style.width = width + 'px';
+
+    if (isDouble) {
+        obstacle.innerHTML = `
+            <div class="cactus-trunk" style="left: 30%"></div>
+            <div class="cactus-arm-left" style="left: -10%; width: 40%"></div>
+            
+            <div class="cactus-trunk" style="left: 70%; height: 80%"></div>
+            <div class="cactus-arm-right" style="right: -5%; width: 35%; bottom: 40%"></div>
+        `;
+    } else {
+        obstacle.innerHTML = `
+            <div class="cactus-trunk"></div>
+            <div class="cactus-arm-left"></div>
+            <div class="cactus-arm-right"></div>
+        `;
+    }
 
     gameBoard.appendChild(obstacle);
     obstacles.push({ el: obstacle, left: obstacleLeft, width: width, height: height });
